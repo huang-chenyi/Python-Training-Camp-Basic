@@ -1,8 +1,3 @@
-"""
-练习: 正则表达式匹配
-
-在本练习中，你将练习使用Python的正则表达式来处理文本匹配和提取。
-"""
 import re
 
 def find_emails(text):
@@ -15,9 +10,16 @@ def find_emails(text):
     返回:
         list: 文本中找到的所有电子邮件地址的列表
     """
-    # 实现你的代码: 使用正则表达式查找所有邮箱地址
-    # 邮箱格式通常为: username@domain.com
-    pass
+    # 电子邮件地址的正则表达式模式
+    # 匹配用户名部分（字母、数字、点、下划线、百分号、加号和减号）
+    # 然后是@符号
+    # 然后是域名部分（字母、数字、点和连字符）
+    # 最后是顶级域名（至少2个字母）
+    pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    
+    # 使用findall方法查找所有匹配项
+    emails = re.findall(pattern, text)
+    return emails
 
 
 def is_valid_phone_number(phone):
@@ -35,8 +37,16 @@ def is_valid_phone_number(phone):
     返回:
         bool: 如果是有效的手机号码则返回True，否则返回False
     """
-    # 实现你的代码: 验证手机号码是否合法
-    pass
+    # 手机号码的正则表达式模式
+    # ^表示开始，$表示结束，确保整个字符串匹配
+    # 1表示以1开头
+    # [3-9]表示第二位是3到9之间的数字
+    # \d{9}表示后面是9个数字
+    pattern = r'^1[3-9]\d{9}$'
+    
+    # 使用re.match检查是否匹配模式
+    match = re.match(pattern, phone)
+    return bool(match)
 
 
 def extract_urls(text):
@@ -49,6 +59,13 @@ def extract_urls(text):
     返回:
         list: 文本中找到的所有URL的列表
     """
-    # 实现你的代码: 使用正则表达式提取所有URL
-    # 需要考虑http://和https://开头的URL
-    pass 
+    # URL的正则表达式模式
+    # 匹配http或https开头
+    # 然后是://
+    # 然后是域名部分和可能的路径
+    # 使用更宽松的模式匹配各种URL格式
+    pattern = r'https?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
+    
+    # 使用findall方法查找所有匹配项
+    urls = re.findall(pattern, text)
+    return urls 
