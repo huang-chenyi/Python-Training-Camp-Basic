@@ -194,6 +194,15 @@ jobs:
         # 打印 JSON 时隐藏 Token
         echo "构造的 JSON (Token 已隐藏): $(printf '{"channel": "github", "courseId": %d, "ext": "{}", "name": "%s", "score": %s, "totalScore": 100}' "$COURSE_ID" "$GITHUB_ACTOR" "$SCORE")"
 
+
+        # ------------- 添加调试输出 -------------
+        echo "Debug URL Check: [$DECODED_API_URL]"
+        echo "Debug URL characters (od -c):"
+        # 使用 printf 传递给 od 以避免 echo 引入换行符影响 od 输出
+        printf '%s' "$DECODED_API_URL" | od -c
+        echo "Debug Token Check (first 5 chars): [${DECODED_TOKEN:0:5}...]"
+        # ------------- 调试输出结束 -------------
+
         curl -X POST \
              -H 'accept: application/json;charset=utf-8' \
              -H 'Content-Type: application/json' \
